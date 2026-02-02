@@ -1,0 +1,1053 @@
+{
+	"openapi": "3.1.0",
+	"info": {
+		"title": "memory-server",
+		"description": "memory-server MCP Server",
+		"version": "0.6.3"
+	},
+	"servers": [
+		{
+			"url": "/mcpo/memory"
+		}
+	],
+	"paths": {
+		"/create_entities": {
+			"post": {
+				"summary": "Create Entities",
+				"description": "Create multiple new entities in the knowledge graph",
+				"operationId": "tool_create_entities_post",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/create_entities_form_model"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "Successful Response",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/create_entities_response_model"
+										},
+										{}
+									],
+									"title": "Response Tool Create Entities Post"
+								}
+							}
+						}
+					},
+					"422": {
+						"description": "Validation Error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/HTTPValidationError"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/create_relations": {
+			"post": {
+				"summary": "Create Relations",
+				"description": "Create multiple new relations between entities in the knowledge graph. Relations should be in active voice",
+				"operationId": "tool_create_relations_post",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/create_relations_form_model"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "Successful Response",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/create_relations_response_model"
+										},
+										{}
+									],
+									"title": "Response Tool Create Relations Post"
+								}
+							}
+						}
+					},
+					"422": {
+						"description": "Validation Error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/HTTPValidationError"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/add_observations": {
+			"post": {
+				"summary": "Add Observations",
+				"description": "Add new observations to existing entities in the knowledge graph",
+				"operationId": "tool_add_observations_post",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/add_observations_form_model"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "Successful Response",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/add_observations_response_model"
+										},
+										{}
+									],
+									"title": "Response Tool Add Observations Post"
+								}
+							}
+						}
+					},
+					"422": {
+						"description": "Validation Error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/HTTPValidationError"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/delete_entities": {
+			"post": {
+				"summary": "Delete Entities",
+				"description": "Delete multiple entities and their associated relations from the knowledge graph",
+				"operationId": "tool_delete_entities_post",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/delete_entities_form_model"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "Successful Response",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/delete_entities_response_model"
+										},
+										{}
+									],
+									"title": "Response Tool Delete Entities Post"
+								}
+							}
+						}
+					},
+					"422": {
+						"description": "Validation Error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/HTTPValidationError"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/delete_observations": {
+			"post": {
+				"summary": "Delete Observations",
+				"description": "Delete specific observations from entities in the knowledge graph",
+				"operationId": "tool_delete_observations_post",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/delete_observations_form_model"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "Successful Response",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/delete_observations_response_model"
+										},
+										{}
+									],
+									"title": "Response Tool Delete Observations Post"
+								}
+							}
+						}
+					},
+					"422": {
+						"description": "Validation Error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/HTTPValidationError"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/delete_relations": {
+			"post": {
+				"summary": "Delete Relations",
+				"description": "Delete multiple relations from the knowledge graph",
+				"operationId": "tool_delete_relations_post",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/delete_relations_form_model"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "Successful Response",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/delete_relations_response_model"
+										},
+										{}
+									],
+									"title": "Response Tool Delete Relations Post"
+								}
+							}
+						}
+					},
+					"422": {
+						"description": "Validation Error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/HTTPValidationError"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/read_graph": {
+			"post": {
+				"summary": "Read Graph",
+				"description": "Read the entire knowledge graph",
+				"operationId": "tool_read_graph_post",
+				"responses": {
+					"200": {
+						"description": "Successful Response",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/search_nodes": {
+			"post": {
+				"summary": "Search Nodes",
+				"description": "Search for nodes in the knowledge graph based on a query",
+				"operationId": "tool_search_nodes_post",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/search_nodes_form_model"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "Successful Response",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/search_nodes_response_model"
+										},
+										{}
+									],
+									"title": "Response Tool Search Nodes Post"
+								}
+							}
+						}
+					},
+					"422": {
+						"description": "Validation Error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/HTTPValidationError"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/open_nodes": {
+			"post": {
+				"summary": "Open Nodes",
+				"description": "Open specific nodes in the knowledge graph by their names",
+				"operationId": "tool_open_nodes_post",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/open_nodes_form_model"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "Successful Response",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/open_nodes_response_model"
+										},
+										{}
+									],
+									"title": "Response Tool Open Nodes Post"
+								}
+							}
+						}
+					},
+					"422": {
+						"description": "Validation Error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/HTTPValidationError"
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	"components": {
+		"schemas": {
+			"HTTPValidationError": {
+				"properties": {
+					"detail": {
+						"items": {
+							"$ref": "#/components/schemas/ValidationError"
+						},
+						"type": "array",
+						"title": "Detail"
+					}
+				},
+				"type": "object",
+				"title": "HTTPValidationError"
+			},
+			"ValidationError": {
+				"properties": {
+					"loc": {
+						"items": {
+							"anyOf": [
+								{
+									"type": "string"
+								},
+								{
+									"type": "integer"
+								}
+							]
+						},
+						"type": "array",
+						"title": "Location"
+					},
+					"msg": {
+						"type": "string",
+						"title": "Message"
+					},
+					"type": {
+						"type": "string",
+						"title": "Error Type"
+					}
+				},
+				"type": "object",
+				"required": [
+					"loc",
+					"msg",
+					"type"
+				],
+				"title": "ValidationError"
+			},
+			"add_observations_form_model": {
+				"properties": {
+					"observations": {
+						"items": {
+							"$ref": "#/components/schemas/add_observations_form_model_observations_item_model"
+						},
+						"type": "array",
+						"title": "Observations",
+						"description": ""
+					}
+				},
+				"type": "object",
+				"required": [
+					"observations"
+				],
+				"title": "add_observations_form_model"
+			},
+			"add_observations_form_model_observations_item_model": {
+				"properties": {
+					"entityName": {
+						"type": "string",
+						"title": "Entityname",
+						"description": "The name of the entity to add the observations to"
+					},
+					"contents": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array",
+						"title": "Contents",
+						"description": "An array of observation contents to add"
+					}
+				},
+				"type": "object",
+				"required": [
+					"entityName",
+					"contents"
+				],
+				"title": "add_observations_form_model_observations_item_model"
+			},
+			"add_observations_response_model": {
+				"properties": {
+					"results": {
+						"items": {
+							"$ref": "#/components/schemas/add_observations_response_model_results_item_model"
+						},
+						"type": "array",
+						"title": "Results",
+						"description": ""
+					}
+				},
+				"type": "object",
+				"required": [
+					"results"
+				],
+				"title": "add_observations_response_model"
+			},
+			"add_observations_response_model_results_item_model": {
+				"properties": {
+					"entityName": {
+						"type": "string",
+						"title": "Entityname",
+						"description": ""
+					},
+					"addedObservations": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array",
+						"title": "Addedobservations",
+						"description": ""
+					}
+				},
+				"type": "object",
+				"required": [
+					"entityName",
+					"addedObservations"
+				],
+				"title": "add_observations_response_model_results_item_model"
+			},
+			"create_entities_form_model": {
+				"properties": {
+					"entities": {
+						"items": {
+							"$ref": "#/components/schemas/create_entities_form_model_entities_item_model"
+						},
+						"type": "array",
+						"title": "Entities",
+						"description": ""
+					}
+				},
+				"type": "object",
+				"required": [
+					"entities"
+				],
+				"title": "create_entities_form_model"
+			},
+			"create_entities_form_model_entities_item_model": {
+				"properties": {
+					"name": {
+						"type": "string",
+						"title": "Name",
+						"description": "The name of the entity"
+					},
+					"entityType": {
+						"type": "string",
+						"title": "Entitytype",
+						"description": "The type of the entity"
+					},
+					"observations": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array",
+						"title": "Observations",
+						"description": "An array of observation contents associated with the entity"
+					}
+				},
+				"type": "object",
+				"required": [
+					"name",
+					"entityType",
+					"observations"
+				],
+				"title": "create_entities_form_model_entities_item_model"
+			},
+			"create_entities_response_model": {
+				"properties": {
+					"entities": {
+						"items": {
+							"$ref": "#/components/schemas/create_entities_response_model_entities_item_model"
+						},
+						"type": "array",
+						"title": "Entities",
+						"description": ""
+					}
+				},
+				"type": "object",
+				"required": [
+					"entities"
+				],
+				"title": "create_entities_response_model"
+			},
+			"create_entities_response_model_entities_item_model": {
+				"properties": {
+					"name": {
+						"type": "string",
+						"title": "Name",
+						"description": "The name of the entity"
+					},
+					"entityType": {
+						"type": "string",
+						"title": "Entitytype",
+						"description": "The type of the entity"
+					},
+					"observations": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array",
+						"title": "Observations",
+						"description": "An array of observation contents associated with the entity"
+					}
+				},
+				"type": "object",
+				"required": [
+					"name",
+					"entityType",
+					"observations"
+				],
+				"title": "create_entities_response_model_entities_item_model"
+			},
+			"create_relations_form_model": {
+				"properties": {
+					"relations": {
+						"items": {
+							"$ref": "#/components/schemas/create_relations_form_model_relations_item_model"
+						},
+						"type": "array",
+						"title": "Relations",
+						"description": ""
+					}
+				},
+				"type": "object",
+				"required": [
+					"relations"
+				],
+				"title": "create_relations_form_model"
+			},
+			"create_relations_form_model_relations_item_model": {
+				"properties": {
+					"from": {
+						"type": "string",
+						"title": "From",
+						"description": "The name of the entity where the relation starts"
+					},
+					"to": {
+						"type": "string",
+						"title": "To",
+						"description": "The name of the entity where the relation ends"
+					},
+					"relationType": {
+						"type": "string",
+						"title": "Relationtype",
+						"description": "The type of the relation"
+					}
+				},
+				"type": "object",
+				"required": [
+					"from",
+					"to",
+					"relationType"
+				],
+				"title": "create_relations_form_model_relations_item_model"
+			},
+			"create_relations_response_model": {
+				"properties": {
+					"relations": {
+						"items": {
+							"$ref": "#/components/schemas/create_relations_response_model_relations_item_model"
+						},
+						"type": "array",
+						"title": "Relations",
+						"description": ""
+					}
+				},
+				"type": "object",
+				"required": [
+					"relations"
+				],
+				"title": "create_relations_response_model"
+			},
+			"create_relations_response_model_relations_item_model": {
+				"properties": {
+					"from": {
+						"type": "string",
+						"title": "From",
+						"description": "The name of the entity where the relation starts"
+					},
+					"to": {
+						"type": "string",
+						"title": "To",
+						"description": "The name of the entity where the relation ends"
+					},
+					"relationType": {
+						"type": "string",
+						"title": "Relationtype",
+						"description": "The type of the relation"
+					}
+				},
+				"type": "object",
+				"required": [
+					"from",
+					"to",
+					"relationType"
+				],
+				"title": "create_relations_response_model_relations_item_model"
+			},
+			"delete_entities_form_model": {
+				"properties": {
+					"entityNames": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array",
+						"title": "Entitynames",
+						"description": "An array of entity names to delete"
+					}
+				},
+				"type": "object",
+				"required": [
+					"entityNames"
+				],
+				"title": "delete_entities_form_model"
+			},
+			"delete_entities_response_model": {
+				"properties": {
+					"success": {
+						"type": "boolean",
+						"title": "Success",
+						"description": ""
+					},
+					"message": {
+						"type": "string",
+						"title": "Message",
+						"description": ""
+					}
+				},
+				"type": "object",
+				"required": [
+					"success",
+					"message"
+				],
+				"title": "delete_entities_response_model"
+			},
+			"delete_observations_form_model": {
+				"properties": {
+					"deletions": {
+						"items": {
+							"$ref": "#/components/schemas/delete_observations_form_model_deletions_item_model"
+						},
+						"type": "array",
+						"title": "Deletions",
+						"description": ""
+					}
+				},
+				"type": "object",
+				"required": [
+					"deletions"
+				],
+				"title": "delete_observations_form_model"
+			},
+			"delete_observations_form_model_deletions_item_model": {
+				"properties": {
+					"entityName": {
+						"type": "string",
+						"title": "Entityname",
+						"description": "The name of the entity containing the observations"
+					},
+					"observations": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array",
+						"title": "Observations",
+						"description": "An array of observations to delete"
+					}
+				},
+				"type": "object",
+				"required": [
+					"entityName",
+					"observations"
+				],
+				"title": "delete_observations_form_model_deletions_item_model"
+			},
+			"delete_observations_response_model": {
+				"properties": {
+					"success": {
+						"type": "boolean",
+						"title": "Success",
+						"description": ""
+					},
+					"message": {
+						"type": "string",
+						"title": "Message",
+						"description": ""
+					}
+				},
+				"type": "object",
+				"required": [
+					"success",
+					"message"
+				],
+				"title": "delete_observations_response_model"
+			},
+			"delete_relations_form_model": {
+				"properties": {
+					"relations": {
+						"items": {
+							"$ref": "#/components/schemas/delete_relations_form_model_relations_item_model"
+						},
+						"type": "array",
+						"title": "Relations",
+						"description": "An array of relations to delete"
+					}
+				},
+				"type": "object",
+				"required": [
+					"relations"
+				],
+				"title": "delete_relations_form_model"
+			},
+			"delete_relations_form_model_relations_item_model": {
+				"properties": {
+					"from": {
+						"type": "string",
+						"title": "From",
+						"description": "The name of the entity where the relation starts"
+					},
+					"to": {
+						"type": "string",
+						"title": "To",
+						"description": "The name of the entity where the relation ends"
+					},
+					"relationType": {
+						"type": "string",
+						"title": "Relationtype",
+						"description": "The type of the relation"
+					}
+				},
+				"type": "object",
+				"required": [
+					"from",
+					"to",
+					"relationType"
+				],
+				"title": "delete_relations_form_model_relations_item_model"
+			},
+			"delete_relations_response_model": {
+				"properties": {
+					"success": {
+						"type": "boolean",
+						"title": "Success",
+						"description": ""
+					},
+					"message": {
+						"type": "string",
+						"title": "Message",
+						"description": ""
+					}
+				},
+				"type": "object",
+				"required": [
+					"success",
+					"message"
+				],
+				"title": "delete_relations_response_model"
+			},
+			"open_nodes_form_model": {
+				"properties": {
+					"names": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array",
+						"title": "Names",
+						"description": "An array of entity names to retrieve"
+					}
+				},
+				"type": "object",
+				"required": [
+					"names"
+				],
+				"title": "open_nodes_form_model"
+			},
+			"open_nodes_response_model": {
+				"properties": {
+					"entities": {
+						"items": {
+							"$ref": "#/components/schemas/open_nodes_response_model_entities_item_model"
+						},
+						"type": "array",
+						"title": "Entities",
+						"description": ""
+					},
+					"relations": {
+						"items": {
+							"$ref": "#/components/schemas/open_nodes_response_model_relations_item_model"
+						},
+						"type": "array",
+						"title": "Relations",
+						"description": ""
+					}
+				},
+				"type": "object",
+				"required": [
+					"entities",
+					"relations"
+				],
+				"title": "open_nodes_response_model"
+			},
+			"open_nodes_response_model_entities_item_model": {
+				"properties": {
+					"name": {
+						"type": "string",
+						"title": "Name",
+						"description": "The name of the entity"
+					},
+					"entityType": {
+						"type": "string",
+						"title": "Entitytype",
+						"description": "The type of the entity"
+					},
+					"observations": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array",
+						"title": "Observations",
+						"description": "An array of observation contents associated with the entity"
+					}
+				},
+				"type": "object",
+				"required": [
+					"name",
+					"entityType",
+					"observations"
+				],
+				"title": "open_nodes_response_model_entities_item_model"
+			},
+			"open_nodes_response_model_relations_item_model": {
+				"properties": {
+					"from": {
+						"type": "string",
+						"title": "From",
+						"description": "The name of the entity where the relation starts"
+					},
+					"to": {
+						"type": "string",
+						"title": "To",
+						"description": "The name of the entity where the relation ends"
+					},
+					"relationType": {
+						"type": "string",
+						"title": "Relationtype",
+						"description": "The type of the relation"
+					}
+				},
+				"type": "object",
+				"required": [
+					"from",
+					"to",
+					"relationType"
+				],
+				"title": "open_nodes_response_model_relations_item_model"
+			},
+			"search_nodes_form_model": {
+				"properties": {
+					"query": {
+						"type": "string",
+						"title": "Query",
+						"description": "The search query to match against entity names, types, and observation content"
+					}
+				},
+				"type": "object",
+				"required": [
+					"query"
+				],
+				"title": "search_nodes_form_model"
+			},
+			"search_nodes_response_model": {
+				"properties": {
+					"entities": {
+						"items": {
+							"$ref": "#/components/schemas/search_nodes_response_model_entities_item_model"
+						},
+						"type": "array",
+						"title": "Entities",
+						"description": ""
+					},
+					"relations": {
+						"items": {
+							"$ref": "#/components/schemas/search_nodes_response_model_relations_item_model"
+						},
+						"type": "array",
+						"title": "Relations",
+						"description": ""
+					}
+				},
+				"type": "object",
+				"required": [
+					"entities",
+					"relations"
+				],
+				"title": "search_nodes_response_model"
+			},
+			"search_nodes_response_model_entities_item_model": {
+				"properties": {
+					"name": {
+						"type": "string",
+						"title": "Name",
+						"description": "The name of the entity"
+					},
+					"entityType": {
+						"type": "string",
+						"title": "Entitytype",
+						"description": "The type of the entity"
+					},
+					"observations": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array",
+						"title": "Observations",
+						"description": "An array of observation contents associated with the entity"
+					}
+				},
+				"type": "object",
+				"required": [
+					"name",
+					"entityType",
+					"observations"
+				],
+				"title": "search_nodes_response_model_entities_item_model"
+			},
+			"search_nodes_response_model_relations_item_model": {
+				"properties": {
+					"from": {
+						"type": "string",
+						"title": "From",
+						"description": "The name of the entity where the relation starts"
+					},
+					"to": {
+						"type": "string",
+						"title": "To",
+						"description": "The name of the entity where the relation ends"
+					},
+					"relationType": {
+						"type": "string",
+						"title": "Relationtype",
+						"description": "The type of the relation"
+					}
+				},
+				"type": "object",
+				"required": [
+					"from",
+					"to",
+					"relationType"
+				],
+				"title": "search_nodes_response_model_relations_item_model"
+			}
+		}
+	}
+}
