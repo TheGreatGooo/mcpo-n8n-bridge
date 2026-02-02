@@ -440,10 +440,10 @@ async def get_all_tools():
                                     
                                     logger.info(f"    Schema ref: {schema_ref}")
                                     
-                                    # Resolve schema reference if it's a $ref
+                                    # Resolve schema reference if it's a $ref and keep raw reference for testing
+                                    raw_schema = schema_ref
                                     actual_schema = {"type": "object", "properties": {}}
                                     if "$ref" in schema_ref:
-                                        # Extract schema name from $ref like "#/components/schemas/list_directory_form_model"
                                         schema_name = schema_ref["$ref"].split("/")[-1]
                                         components = spec.get("components", {})
                                         schemas = components.get("schemas", {})
@@ -456,22 +456,49 @@ async def get_all_tools():
                                         actual_schema = schema_ref
                                         logger.info(f"    Using direct schema: {actual_schema}")
                                     
-                                    # Ensure the schema is a valid object schema for N8N
+                                    # Recursively resolve any $ref within the schema
+                                    def resolve_refs(schema, components_schemas, visited=None):
+                                        """Recursively resolve $ref entries in a schema.
+                                        
+                                        Args:
+                                            schema: The current schema fragment (dict or list).
+                                            components_schemas: Mapping of component schema names to definitions.
+                                            visited: Set of schema names already visited to avoid circular loops.
+                                        
+                                        Returns:
+                                            A schema with all $ref resolved, or the original fragment if a loop is detected.
+                                        """
+                                        if visited is None:
+                                            visited = set()
+                                        
+                                        if isinstance(schema, dict):
+                                            if "$ref" in schema:
+                                                ref_name = schema["$ref"].split("/")[-1]
+                                                # Detect circular reference
+                                                if ref_name in visited:
+                                                    logger.warning(f"Circular $ref detected for {ref_name}, stopping recursion")
+                                                    return {}
+                                                visited.add(ref_name)
+                                                ref_schema = components_schemas.get(ref_name, {})
+                                                return resolve_refs(ref_schema, components_schemas, visited)
+                                            return {k: resolve_refs(v, components_schemas, visited) for k, v in schema.items()}
+                                        elif isinstance(schema, list):
+                                            return [resolve_refs(item, components_schemas, visited) for item in schema]
+                                        else:
+                                            return schema
+                                    
+                                    components_schemas = spec.get("components", {}).get("schemas", {})
+                                    actual_schema = resolve_refs(actual_schema, components_schemas)
+                                    
                                     if actual_schema.get("type") != "object":
-                                        # Convert non-object schemas to object wrapper
                                         actual_schema = {
                                             "type": "object",
-                                            "properties": {
-                                                "value": actual_schema
-                                            },
+                                            "properties": {"value": actual_schema},
                                             "required": ["value"]
                                         }
                                         logger.info(f"    Wrapped non-object schema")
                                     
-                                    # Get tool info using exact name and OpenAPI description
                                     tool_info_result = get_ai_friendly_tool_info(server, tool_name, operation)
-                                    
-                                    # Improve the input schema with better property descriptions
                                     improved_schema = improve_schema_descriptions(actual_schema, server, tool_name)
                                     
                                     tool_info = {
@@ -481,7 +508,7 @@ async def get_all_tools():
                                         "_server": server,
                                         "_original_name": tool_name,
                                         "_endpoint_path": endpoint_path,
-                                        "_original_schema": actual_schema  # Store original for parameter mapping
+                                        "_original_schema": actual_schema
                                     }
                                     
                                     all_tools.append(tool_info)

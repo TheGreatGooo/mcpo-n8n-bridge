@@ -102,6 +102,22 @@ async def test_get_all_tools_parses_test_json():
             if props:
                 for field in ['name', 'entityType', 'observations']:
                     assert field in props, f"{field} missing in entity schema"
-            else:
-                # Expect a $ref to the detailed schema
-                assert '$ref' in entity_item_schema, "Entity items schema should have a $ref when properties are not expanded"
+                # Ensure the schema is fully resolved (no $ref remaining)
+                import json as _json
+                assert '$ref' not in _json.dumps(schema), "Schema contains unresolved $ref"
+            # Additional validation for create_relations tool
+            create_relations_tool = next((t for t in tools if t['name'] == 'create_relations'), None)
+            assert create_relations_tool is not None, "create_relations tool not found"
+            rel_schema = create_relations_tool['inputSchema']
+            assert 'relations' in rel_schema.get('properties', {}), "relations property missing"
+            assert rel_schema['properties']['relations'].get('type') == 'array', "relations should be array"
+            assert 'relations' in rel_schema.get('required', []), "relations should be required"
+            rel_item_schema = rel_schema['properties']['relations'].get('items', {})
+            assert isinstance(rel_item_schema, dict), "relations items schema missing"
+            rel_props = rel_item_schema.get('properties', {})
+            for field in ['from', 'to', 'relationType']:
+                assert field in rel_props, f"{field} missing in relation schema"
+            # Ensure relation schema fully resolved
+            import json as _json
+            assert '$ref' not in _json.dumps(rel_schema), "Relation schema contains unresolved $ref"
+            # Raw schema verification removed for create_relations as it's no longer needed
